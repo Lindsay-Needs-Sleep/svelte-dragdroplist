@@ -90,15 +90,15 @@
         width: 100%;
     }
 
-    .item:not(#grabbed):not(#ghost) {
+    .item:not(.grabbed):not(.ghost) {
         z-index: 10;
     }
 
-    #grabbed {
+    .grabbed {
         opacity: 0.0;
     }
 
-    #ghost {
+    .ghost {
         pointer-events: none;
         z-index: -5;
         position: absolute;
@@ -107,11 +107,11 @@
         opacity: 0.0;
     }
 
-    #ghost * {
+    .ghost * {
         pointer-events: none;
     }
 
-    #ghost.haunting {
+    .ghost.haunting {
         z-index: 20;
         opacity: 1.0;
     }
@@ -130,8 +130,8 @@
 <main class="dragdroplist">
     <div 
         bind:this={ghost}
-        id="ghost"
-        class={grabbed ? "item haunting" : "item"}
+        class="item ghost"
+        class:haunting={grabbed}
         style={"top: " + (mouseY + offsetY - layerY) + "px"}><p></p></div>
     <div 
         class="list"
@@ -141,7 +141,7 @@
         on:touchend={function(ev) {ev.stopPropagation(); release(ev.touches[0]);}}>
         {#each data as datum, i (datum.id ? datum.id : JSON.stringify(datum))}
             <div 
-                id={(grabbed && (datum.id ? datum.id : JSON.stringify(datum)) == grabbed.dataset.id) ? "grabbed" : ""}
+                class:grabbed={(grabbed && (datum.id ? datum.id : JSON.stringify(datum)) == grabbed.dataset.id)}
                 class="item"
                 data-index={i}
                 data-id={(datum.id ? datum.id : JSON.stringify(datum))}

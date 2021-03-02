@@ -151,7 +151,8 @@
                 on:mouseenter={function(ev) {ev.stopPropagation(); dragEnter(ev, ev.target);}}
                 on:touchmove={function(ev) {ev.stopPropagation(); ev.preventDefault(); touchEnter(ev.touches[0]);}}
                 animate:flip|local={{duration: 200}}>
-                <ItemComponent
+                <svelte:component 
+                    this={ItemComponent}
                     data={datum}
                     index={i}
                     allItems={data}

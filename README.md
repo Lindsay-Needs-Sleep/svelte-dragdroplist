@@ -19,11 +19,26 @@ The simplest way to use the component is to pass it an array of unique strings. 
 <script>
     import DragDropList from "svelte-dragdroplist";
 
-    let data = ["Adams", "Boston", "Chicago", "Denver"];
+    let items = ["Adams", "Boston", "Chicago", "Denver"];
 </script>
 
-<DragDropList bind:data={data}/>
+<DragDropList bind:data={items} ItemComponent={YourSvelteComponent} />
 ```
+
+#### ItemComponent
+ItemComponent is optional.
+If you pass one it will be called like this:
+```
+<YourSvelteItemComponent 
+    data={"Adams"}
+    index={i}        // Mostly for reference for making display decisions
+    allItems={items} // Mostly for reference for making display decisions
+    on:moveup
+    on:movedown
+    on:remove
+/>
+```
+You must dispatch the `moveup`, `movedown`, `remove` events if they are triggered by UI in YourSvelteItemComponent.
 
 ##### Unique IDs
 

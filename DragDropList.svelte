@@ -6,6 +6,19 @@
     export let ItemComponent = DefaultItem;
     export let itemIdName = 'id';
 
+    $: items = data.map((datum, i) => {
+        let id;
+        try {
+            id = datum.id;
+        } catch (e) {
+            id = i;
+        }
+        return {
+            id: id,
+            data: datum, 
+        };
+    });
+
     let ghost;
     let grabbed;
 
@@ -58,10 +71,10 @@
 
     // does the actual moving of items in data
     function moveDatum(from, to) {
-        if (to < 0 || to >= data.length) return;
-        let temp = data[from];
-        data = [...data.slice(0, from), ...data.slice(from + 1)];
-        data = [...data.slice(0, to), temp, ...data.slice(to)];
+        if (to < 0 || to >= items.length) return;
+        let temp = items[from];
+        items = [...items.slice(0, from), ...items.slice(from + 1)];
+        items = [...items.slice(0, to), temp, ...items.slice(to)];
     }
 
     function release(ev) {
@@ -69,7 +82,7 @@
     }
 
     function removeDatum(index) {
-        data = [...data.slice(0, index), ...data.slice(index + 1)];
+        items = [...items.slice(0, index), ...items.slice(index + 1)];
     }
 </script>
 
@@ -154,13 +167,13 @@
                 animate:flip|local={{duration: 200}}>
                 <svelte:component 
                     this={ItemComponent}
-                    data={datum}
+                    data={item.data}
                     index={i}
-                    allItems={data}
+                    allItems={items.map(item => item.data)}
                     on:moveup={function(ev) {moveDatum(i, i - 1)}}
                     on:movedown={function(ev) {moveDatum(i, i + 1)}}
                     on:remove={function(ev) {removeDatum(i);}}
-                />
+                    />
             </div>
         {/each}
     </div>

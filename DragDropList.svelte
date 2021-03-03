@@ -129,7 +129,8 @@
      You'll also find reactive styling below, which keeps it from being directly
      part of the imperative javascript handlers. -->
 <div 
-    class="list"
+    class="list {$$props.class}"
+    style="{$$props.style}"
     on:mousemove={function(ev) {ev.stopPropagation(); drag(ev.clientY);}}
     on:touchmove={function(ev) {ev.stopPropagation(); drag(ev.touches[0].clientY);}}
     on:touchend={function(ev) {ev.stopPropagation(); release(ev.touches[0]);}}>

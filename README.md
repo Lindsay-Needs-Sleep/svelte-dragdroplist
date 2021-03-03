@@ -72,17 +72,14 @@ let data = ["Chicago",
 
 ### Styling
 
-To style the list and its elements from a parent component or global stylesheet, prefix your selectors with `.dragdroplist`.  You may need to increase the specificity of your selectors or even use the `!important` rule in order to override the classes applied by Svelte.  For example:
+You can pass values to `class` and `style` to style the list container.
 
-```css
-:global(.dragdroplist) {} /* entire component */
-:global(.dragdroplist > .list > div.item) {} /* list item */
-:global(.dragdroplist div.buttons > button.down) {} /* move down button */
-:global(.dragdroplist div.content) {} /* text/html contents of item */
+```
+<DragDropList class="" style="" />
 ```
 
-If you only need to style the contents of an item, you can also use an object with an `html` property as described above.
+To style your items it is recommended to supply a custom `ItemComponent`.
 
 ### In Progress
 
-* Additional animations on drop  
+* Additional animations on drop

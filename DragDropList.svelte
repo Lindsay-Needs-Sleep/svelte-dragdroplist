@@ -1,20 +1,14 @@
 <script>
     import {flip} from "svelte/animate";
     import DefaultItem from "./DefaultItem.svelte";
-    
+
     export let data = [];
     export let ItemComponent = DefaultItem;
     export let itemIdName = 'id';
 
     $: items = data.map((datum, i) => {
-        let id;
-        try {
-            id = datum.id;
-        } catch (e) {
-            id = i;
-        }
         return {
-            id: id,
+            id: `${i}-${new Date().valueOf() + Math.random()}`,
             data: datum, 
         };
     });

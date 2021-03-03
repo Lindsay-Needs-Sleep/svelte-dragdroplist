@@ -14,7 +14,7 @@ Sortable lists [made with Svelte](https://madewithsvelte.com/svelte-dragdroplist
 [Basic REPL](https://svelte.dev/repl/6fb61b9868734493aec65eb53dc1a4bd?version=3.22.2)  
 [REPL with every feature!](https://svelte.dev/repl/915db3b3ed704fddb7ddfb64bcbc2624?version=3.22.2)  
 
-The simplest way to use the component is to pass it an array of unique strings.  If you `bind:data`, the source array will be updated as the user rearranges its items.
+The simplest way to use the component is to pass it an array of strings.  If you `bind:data`, the source array will be updated as the user rearranges its items.
 ```js
 <script>
     import DragDropList from "svelte-dragdroplist";
@@ -22,15 +22,17 @@ The simplest way to use the component is to pass it an array of unique strings. 
     let items = ["Adams", "Boston", "Chicago", "Denver"];
 </script>
 
-<DragDropList bind:data={items} ItemComponent={YourSvelteComponent} />
+<DragDropList bind:data={items} ItemComponent={YourSvelteComponent} itemIdName={"uuid"} />
 ```
 
 #### ItemComponent
-ItemComponent is optional.
-If you pass one it will be called like this:
+
+(optional) ItemComponent is Svelte component.
+If you pass one, it will be called like this:
+
 ```
 <YourSvelteItemComponent 
-    data={"Adams"}
+    data={items[i]}
     index={i}        // Mostly for reference for making display decisions
     allItems={items} // Mostly for reference for making display decisions
     on:moveup
@@ -39,6 +41,8 @@ If you pass one it will be called like this:
 />
 ```
 You must dispatch the `moveup`, `movedown`, `remove` events if they are triggered by UI in YourSvelteItemComponent.
+
+Note: _adding_ items is as simple as adding them to the data array.
 
 ##### Unique IDs
 
@@ -53,37 +57,18 @@ let data = [{"id": 0, "text": "Boston"},
 
 If the item's ID is not named `id`, you can customize it by setting `itemIdName`:
 
+##### Default ItemComponent
+
+The default ItemComponent will be used if no `ItemComponent` is specified.
+It accepts items in any of the formats shown here.  (You can mix formats.)
 ```js
-<script>
-    import DragDropList from "svelte-dragdroplist";
-
-    let data = [{"uuid": 0, "text": "Boston"},
-                {"uuid": 1, "text": "Boston"},
-                {"uuid": 2, "text": "Chicago"},
-                {"uuid": 3, "text": "Denver"}];
-</script>
-
-<DragDropList bind:data={data} ItemComponent={YourSvelteComponent} itemIdName={"uuid"} />
+let data = ["Chicago", 
+            "Denver",
+            {"text": "Adams"},
+            {"text": "Boston"},
+            {"html": "<p style='color: blue;'>Chicago</p>"},
+            {"html": "<p style='color: red;'>Denver</p>"}];
 ```
-
-##### HTML
-
-You can also include an "html" attribute instead of "text".  It's up to you to make sure the html is clean.  
-  If you want, you can even use both in one list.  
-```js
-let data = [{"id": 0, "text": "Adams"}, 
-            {"id": 1, "text": "Boston"}, 
-            {"id": 2, "html": "<p style='color: blue;'>Chicago</p>"}, 
-            {"id": 3, "html": "<p style='color: red;'>Denver</p>"}];
-```
-
-##### Removable Items
-
-A delete button can be added to each item with the `removesItems` prop:
-```js
-<DragDropList bind:data={data} removesItems={true}/>
-```
-Note: _adding_ items is as simple as adding them to the data array.
 
 ### Styling
 

@@ -87,27 +87,24 @@
 <style>
     .list {
         position: relative;
-        z-index: 5;
         display: flex;
         flex-direction: column;
         overflow: hidden;
     }
 
-    .item:not(.grabbed):not(.ghost) {
+    .drag-drop-list-item {
         z-index: 10;
     }
 
     .grabbed {
-        opacity: 0.0;
+        visibility: hidden;
     }
 
     .ghost {
+        display: none;
         pointer-events: none;
-        z-index: -5;
+        z-index: 20;
         position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0.0;
     }
 
     .ghost * {
@@ -115,8 +112,7 @@
     }
 
     .ghost.haunting {
-        z-index: 20;
-        opacity: 1.0;
+        display: unset;
     }
 </style>
 
@@ -163,7 +159,8 @@
     {/each}
     <div
         bind:this={ghost}
-        class="item ghost"
+        class="ghost"
         class:haunting={grabbed}
-        style={"top: " + (mouseY + offsetY - layerY) + "px"}><p></p></div>
+        style={"top: " + (mouseY + offsetY - layerY) + "px"}>
+    </div>
 </div>

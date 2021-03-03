@@ -97,7 +97,7 @@
     }
 
     .grabbed {
-        visibility: hidden;
+        opacity: 0;
     }
 
     .ghost {

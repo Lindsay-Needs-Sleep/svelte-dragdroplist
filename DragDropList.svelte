@@ -72,6 +72,10 @@
     }
 
     function release(ev) {
+        if (grabbed) {
+            // Notify data binding that an item has moved
+            data = items.map(item => item.data);
+        }
         grabbed = null;
     }
 
@@ -150,7 +154,7 @@
                 this={ItemComponent}
                 data={item.data}
                 index={i}
-                allItems={items.map(item => item.data)}
+                allItems={data}
                 on:moveup={function(ev) {moveDatum(i, i - 1)}}
                 on:movedown={function(ev) {moveDatum(i, i + 1)}}
                 on:remove={function(ev) {removeDatum(i);}}

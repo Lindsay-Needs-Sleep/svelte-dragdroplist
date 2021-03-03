@@ -87,21 +87,12 @@
 </script>
 
 <style>
-    main {
-        position: relative;
-    }
-
     .list {
+        position: relative;
         z-index: 5;
         display: flex;
         flex-direction: column;
-        overflow: none;
-    }
-
-    .item {
-        box-sizing: border-box;
-        display: inline-flex;
-        width: 100%;
+        overflow: hidden;
     }
 
     .item:not(.grabbed):not(.ghost) {
@@ -143,39 +134,37 @@
      grabbed element when triggered.
      You'll also find reactive styling below, which keeps it from being directly
      part of the imperative javascript handlers. -->
-<main class="dragdroplist">
-    <div 
+<div 
+    class="list"
+    on:mousemove={function(ev) {ev.stopPropagation(); drag(ev.clientY);}}
+    on:touchmove={function(ev) {ev.stopPropagation(); drag(ev.touches[0].clientY);}}
+    on:touchend={function(ev) {ev.stopPropagation(); release(ev.touches[0]);}}>
+        {#each data as datum, i (datum[itemIdName] ? datum[itemIdName] : JSON.stringify(datum))}
+        <div 
+                class:grabbed={(grabbed && (datum[itemIdName] ? datum[itemIdName] : JSON.stringify(datum)) == grabbed.dataset.id)}
+            class="item"
+            data-index={i}
+                data-id={(datum[itemIdName] ? datum[itemIdName] : JSON.stringify(datum))}
+            data-grabY="0"
+            on:mousedown={function(ev) {grab(ev.clientY, this);}}
+            on:touchstart={function(ev) {grab(ev.touches[0].clientY, this);}}
+            on:mouseenter={function(ev) {ev.stopPropagation(); dragEnter(ev, ev.target);}}
+            on:touchmove={function(ev) {ev.stopPropagation(); ev.preventDefault(); touchEnter(ev.touches[0]);}}
+            animate:flip|local={{duration: 200}}>
+            <svelte:component 
+                this={ItemComponent}
+                data={item.data}
+                index={i}
+                allItems={items.map(item => item.data)}
+                on:moveup={function(ev) {moveDatum(i, i - 1)}}
+                on:movedown={function(ev) {moveDatum(i, i + 1)}}
+                on:remove={function(ev) {removeDatum(i);}}
+                />
+        </div>
+    {/each}
+    <div
         bind:this={ghost}
         class="item ghost"
         class:haunting={grabbed}
         style={"top: " + (mouseY + offsetY - layerY) + "px"}><p></p></div>
-    <div 
-        class="list"
-        on:mousemove={function(ev) {ev.stopPropagation(); drag(ev.clientY);}}
-        on:touchmove={function(ev) {ev.stopPropagation(); drag(ev.touches[0].clientY);}}
-        on:touchend={function(ev) {ev.stopPropagation(); release(ev.touches[0]);}}>
-        {#each data as datum, i (datum[itemIdName] ? datum[itemIdName] : JSON.stringify(datum))}
-            <div 
-                class:grabbed={(grabbed && (datum[itemIdName] ? datum[itemIdName] : JSON.stringify(datum)) == grabbed.dataset.id)}
-                class="item"
-                data-index={i}
-                data-id={(datum[itemIdName] ? datum[itemIdName] : JSON.stringify(datum))}
-                data-grabY="0"
-                on:mousedown={function(ev) {grab(ev.clientY, this);}}
-                on:touchstart={function(ev) {grab(ev.touches[0].clientY, this);}}
-                on:mouseenter={function(ev) {ev.stopPropagation(); dragEnter(ev, ev.target);}}
-                on:touchmove={function(ev) {ev.stopPropagation(); ev.preventDefault(); touchEnter(ev.touches[0]);}}
-                animate:flip|local={{duration: 200}}>
-                <svelte:component 
-                    this={ItemComponent}
-                    data={item.data}
-                    index={i}
-                    allItems={items.map(item => item.data)}
-                    on:moveup={function(ev) {moveDatum(i, i - 1)}}
-                    on:movedown={function(ev) {moveDatum(i, i + 1)}}
-                    on:remove={function(ev) {removeDatum(i);}}
-                    />
-            </div>
-        {/each}
-    </div>
-</main>
+</div>

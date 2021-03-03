@@ -131,6 +131,8 @@
     }
 </style>
 
+<svelte:window on:mouseup={release} />
+
 <!-- All the documentation has to go up here, sorry.
      (otherwise it conflicts with the HTML or svelte/animate) 
      The .list has handlers for pointer movement and pointer up/release/end.
@@ -151,7 +153,6 @@
         class="list"
         on:mousemove={function(ev) {ev.stopPropagation(); drag(ev.clientY);}}
         on:touchmove={function(ev) {ev.stopPropagation(); drag(ev.touches[0].clientY);}}
-        on:mouseup={function(ev) {ev.stopPropagation(); release(ev);}}
         on:touchend={function(ev) {ev.stopPropagation(); release(ev.touches[0]);}}>
         {#each data as datum, i (datum[itemIdName] ? datum[itemIdName] : JSON.stringify(datum))}
             <div 

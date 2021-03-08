@@ -45,10 +45,25 @@ You must dispatch the `moveup`, `movedown`, `remove` events if they are triggere
 If you aren't sure that your strings will be unique, you should instead pass an array of objects, each with a unique ID:  
 
 ```js
-let data = [{"id": 0, "text": "Boston"}, 
-            {"id": 1, "text": "Boston"}, 
-            {"id": 2, "text": "Chicago"}, 
+let data = [{"id": 0, "text": "Boston"},
+            {"id": 1, "text": "Boston"},
+            {"id": 2, "text": "Chicago"},
             {"id": 3, "text": "Denver"}];
+```
+
+If the item's ID is not named `id`, you can customize it by setting `itemIdName`:
+
+```js
+<script>
+    import DragDropList from "svelte-dragdroplist";
+
+    let data = [{"uuid": 0, "text": "Boston"},
+                {"uuid": 1, "text": "Boston"},
+                {"uuid": 2, "text": "Chicago"},
+                {"uuid": 3, "text": "Denver"}];
+</script>
+
+<DragDropList bind:data={data} ItemComponent={YourSvelteComponent} itemIdName={"uuid"} />
 ```
 
 ##### HTML

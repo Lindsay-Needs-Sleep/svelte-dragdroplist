@@ -1,6 +1,6 @@
 <script>
     import {flip} from "svelte/animate";
-    import DefaultItem from "./DeafultItem.svelte";
+    import DefaultItem from "./DefaultItem.svelte";
     
     export let data = [];
     export let ItemComponent = DefaultItem;

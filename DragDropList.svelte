@@ -84,38 +84,6 @@
     }
 </script>
 
-<style>
-    .list {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-    }
-
-    .drag-drop-list-item {
-        z-index: 10;
-    }
-
-    .grabbed {
-        opacity: 0;
-    }
-
-    .ghost {
-        display: none;
-        pointer-events: none;
-        z-index: 20;
-        position: absolute;
-    }
-
-    .ghost * {
-        pointer-events: none;
-    }
-
-    .ghost.haunting {
-        display: unset;
-    }
-</style>
-
 <svelte:window on:mouseup={release} />
 
 <!-- All the documentation has to go up here, sorry.
@@ -164,3 +132,35 @@
         style={"top: " + (mouseY + offsetY - layerY) + "px"}>
     </div>
 </div>
+
+<style>
+    .list {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .drag-drop-list-item {
+        z-index: 10;
+    }
+
+    .grabbed {
+        opacity: 0;
+    }
+
+    .ghost {
+        display: none;
+        pointer-events: none;
+        z-index: 20;
+        position: absolute;
+    }
+
+    .ghost * {
+        pointer-events: none;
+    }
+
+    .ghost.haunting {
+        display: unset;
+    }
+</style>

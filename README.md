@@ -33,8 +33,8 @@ If you pass one, it will be called like this:
 ```
 <YourSvelteItemComponent 
     data={items[i]}
-    index={i}        // Mostly for reference for making display decisions
-    allItems={items} // Mostly for reference for making display decisions
+    index={i}        // Should only be used for making display decisions (2-way binding behviour untested)
+    allItems={items} // Should only be used for making display decisions (2-way binding behviour untested)
     on:moveup
     on:movedown
     on:remove
@@ -83,3 +83,13 @@ To style your items it is recommended to supply a custom `ItemComponent`.
 ### In Progress
 
 * Additional animations on drop
+
+
+# Development
+
+```
+npm install
+npm run demo
+```
+
+visit: http://localhost:8061

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <title>Svelte-DragDropList</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script defer src='./public/bundle.js'></script>
+
+    <style type="text/css">
+        html,
+        body {
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 0px;
+            height: 100vh;
+            width: 100vw;
+            /* ios viewport bug fix (bottom of scree obscured by control bar*/
+            min-height: -webkit-fill-available;
+        }
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit;
+        }
+      </style>
+</head>
+<body>
+    <script>
+        var waitInterval = setInterval(function() {
+            if (!window.Demo) return;
+            clearInterval(waitInterval);
+            window.demoComponent = new window.Demo({
+                target: document.body,
+                props: {
+                }
+            });
+        }, 200);
+    </script>
+</body>
+</html>

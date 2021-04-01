@@ -6,12 +6,12 @@
     export let ItemComponent = DefaultItem;
     export let itemIdName = 'id';
 
-    $: items = data.map((datum, i) => {
-        return {
-            id: `${i}-${new Date().valueOf() + Math.random()}`,
-            data: datum, 
-        };
-    });
+    // $: items = data.map((datum, i) => {
+    //     return {
+    //         id: `${i}-${new Date().valueOf() + Math.random()}`,
+    //         data: datum, 
+    //     };
+    // });
 
     let ghost;
     let grabbed;
@@ -136,10 +136,10 @@
     on:touchend={function(ev) {ev.stopPropagation(); release(ev.touches[0]);}}>
         {#each data as datum, i (datum[itemIdName] ? datum[itemIdName] : JSON.stringify(datum))}
         <div 
-                class:grabbed={(grabbed && (datum[itemIdName] ? datum[itemIdName] : JSON.stringify(datum)) == grabbed.dataset.id)}
+            class:grabbed={(grabbed && (datum[itemIdName] ? datum[itemIdName] : JSON.stringify(datum)) == grabbed.dataset.id)}
             class="item"
             data-index={i}
-                data-id={(datum[itemIdName] ? datum[itemIdName] : JSON.stringify(datum))}
+            data-id={(datum[itemIdName] ? datum[itemIdName] : JSON.stringify(datum))}
             data-grabY="0"
             on:mousedown={function(ev) {grab(ev.clientY, this);}}
             on:touchstart={function(ev) {grab(ev.touches[0].clientY, this);}}
@@ -148,7 +148,7 @@
             animate:flip|local={{duration: 200}}>
             <svelte:component 
                 this={ItemComponent}
-                data={item.data}
+                data={datum}
                 index={i}
                 allItems={data}
                 on:moveup={function(ev) {moveDatum(i, i - 1)}}

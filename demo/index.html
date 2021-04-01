@@ -28,10 +28,13 @@
 </head>
 <body>
     <script>
+        var count = 0;
         var waitInterval = setInterval(function() {
-            if (!window.Demo) return;
+            count++;
+            if (!window.Demo && count < 20) return;
+            if (count >= 20) console.error('Could not get window.Demo', count);
             clearInterval(waitInterval);
-            window.demoComponent = new window.Demo({
+            window.demoComponent = window.Demo && new window.Demo({
                 target: document.body,
                 props: {
                 }

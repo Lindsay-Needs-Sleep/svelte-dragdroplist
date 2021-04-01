@@ -32,7 +32,7 @@
             >
                 <div style="margin: auto; text-align: center;">
                     Custom DragDropList Items
-                    <DragDropList bind:data={items} ItemComponent={CustomItem} />
+                    <!-- <DragDropList bind:data={items} ItemComponent={CustomItem} /> -->
                 </div>
             </div>
         </div>

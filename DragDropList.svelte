@@ -1,9 +1,10 @@
 <script>
     import {flip} from "svelte/animate";
-    import DefaultItem from "./DeafultItem.svelte";
+    import DefaultItem from "./DefaultItem.svelte";
     
     export let data = [];
     export let ItemComponent = DefaultItem;
+    export let itemIdName = 'id';
 
     let ghost;
     let grabbed;
@@ -139,12 +140,12 @@
         on:touchmove={function(ev) {ev.stopPropagation(); drag(ev.touches[0].clientY);}}
         on:mouseup={function(ev) {ev.stopPropagation(); release(ev);}}
         on:touchend={function(ev) {ev.stopPropagation(); release(ev.touches[0]);}}>
-        {#each data as datum, i (datum.id ? datum.id : JSON.stringify(datum))}
+        {#each data as datum, i (datum[itemIdName] ? datum[itemIdName] : JSON.stringify(datum))}
             <div 
-                class:grabbed={(grabbed && (datum.id ? datum.id : JSON.stringify(datum)) == grabbed.dataset.id)}
+                class:grabbed={(grabbed && (datum[itemIdName] ? datum[itemIdName] : JSON.stringify(datum)) == grabbed.dataset.id)}
                 class="item"
                 data-index={i}
-                data-id={(datum.id ? datum.id : JSON.stringify(datum))}
+                data-id={(datum[itemIdName] ? datum[itemIdName] : JSON.stringify(datum))}
                 data-grabY="0"
                 on:mousedown={function(ev) {grab(ev.clientY, this);}}
                 on:touchstart={function(ev) {grab(ev.touches[0].clientY, this);}}
